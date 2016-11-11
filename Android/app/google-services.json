@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "718245225979",
+    "firebase_url": "https://cp-firebase-esportes.firebaseio.com",
+    "project_id": "cp-firebase-esportes",
+    "storage_bucket": "cp-firebase-esportes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718245225979:android:3804c8c2f9863715",
+        "android_client_info": {
+          "package_name": "com.mj.cpfirebaseesportes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718245225979-j0d1pq10sajhkvhkps2dk79s4cifq4bk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbiAwWsE6e7BATWVOW0pZH-Zx9SfFYrF8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
