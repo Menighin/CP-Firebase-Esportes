@@ -1,5 +1,6 @@
 package com.mj.cpfirebaseesportes;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText password;
     private Button register;
     private Button login;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +45,22 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String emailStr = email.getText().toString();
                 String passwordStr = password.getText().toString();
+                mProgressDialog = ProgressDialog.show(SignupActivity.this,"Registrando","Processando...", false, true);
+                mProgressDialog.setCancelable(false);
 
                 mAuth.createUserWithEmailAndPassword(emailStr, passwordStr)
                     .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(SignupActivity.this, R.string.auth_failed,
-                                        Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(SignupActivity.this, R.string.auth_sucess,
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        mProgressDialog.dismiss();
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(SignupActivity.this, R.string.auth_sucess,
+                                    Toast.LENGTH_SHORT).show();
+                        }
                         }
                     });
             }
