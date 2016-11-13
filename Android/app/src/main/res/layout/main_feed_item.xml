@@ -4,35 +4,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/feed_card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    card_view:cardCornerRadius="4dp"
+    android:layout_height="200dp"
+    card_view:cardCornerRadius="1dp"
+    android:background="@color/White"
     android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/CadetBlue">
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/feed_item_title"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:text="contact det"
+            android:layout_height="wrap_content"
+            android:text="Title Holder"
             android:gravity="center_vertical"
-            android:textColor="@android:color/white"
-            android:textSize="14dp"/>
+            android:textColor="@color/DarkSlateGray"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/feed_item_txtName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium"
             android:gravity="center_vertical"
-            android:textSize="10dp"
+            android:textSize="12sp"
             android:layout_below="@id/feed_item_title"
-            android:layout_marginTop="10dp"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="5dp"/>
+            android:textColor="@color/DarkSlateGray"
+            />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

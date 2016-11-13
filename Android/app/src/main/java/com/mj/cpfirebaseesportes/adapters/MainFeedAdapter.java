@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mj.cpfirebaseesportes.R;
+import com.mj.cpfirebaseesportes.models.Evento;
+
+import java.util.List;
 
 /**
  * Created by Menighin on 12/11/2016.
@@ -15,7 +18,7 @@ import com.mj.cpfirebaseesportes.R;
 
 public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.ViewHolder> {
 
-    private String[] mDataSet;
+    private List<Evento> mEventos;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -29,8 +32,8 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.ViewHo
         }
     }
 
-    public MainFeedAdapter(String[] dataSet) {
-        this.mDataSet = dataSet;
+    public MainFeedAdapter(List<Evento> dataSet) {
+        this.mEventos = dataSet;
     }
 
     @Override
@@ -45,14 +48,14 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.ViewHo
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(mDataSet[position]);
+        holder.mTextView.setText(mEventos.get(position).getTitulo());
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataSet.length;
+        return mEventos.size();
     }
 
 }

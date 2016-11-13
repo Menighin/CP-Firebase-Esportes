@@ -88,7 +88,7 @@ public class EventCreateActivity extends AppCompatActivity {
         data.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
         data.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
 
-        Evento evento = new Evento(esporte, descricao, local, data, nPessoas, valor);
+        Evento evento = new Evento(descricao, esporte, descricao, local, data, nPessoas, valor);
         createEvento(evento);
 
         Log.d("evento-create", "Clicou no botao de criar");
