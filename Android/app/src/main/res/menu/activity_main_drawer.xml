@@ -18,6 +18,10 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Tools" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/common_google_signin_btn_icon_dark"
+            android:title="Logout" />
     </group>
 
     <item android:title="Communicate">
