@@ -13,8 +13,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mj.cpfirebaseesportes.adapters.MainFeedAdapter;
@@ -61,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void onCreatePressed(View v) {
+
+        Log.d("Main", "Clicou");
+
+        Intent i = new Intent(MainActivity.this, EventCreateActivity.class);
+        startActivity(i);
+
     }
 
     @Override
