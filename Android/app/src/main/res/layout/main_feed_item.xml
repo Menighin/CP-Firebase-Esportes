@@ -4,38 +4,180 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/feed_card_view"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="1dp"
     android:background="@color/White"
     android:layout_margin="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/feed_item_title"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/feed_item_bar"
+            android:orientation="horizontal"
+            android:background="@color/sport_type_soccer">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/feed_item_icon"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/feed_item_type"
+                android:text="Esporte"
+                android:textColor="@color/white"
+                android:layout_marginLeft="8dp"
+                android:layout_toEndOf="@id/feed_item_icon"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08 / 10"
+                android:id="@+id/feed_item_group"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/feed_item_group_icon"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_group"
+                android:layout_toStartOf="@id/feed_item_group"
+                android:layout_marginRight="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.1 km"
+                android:id="@+id/feed_item_distance"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/feed_item_group_icon"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/feed_item_distance_icon"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_marker"
+                android:layout_toStartOf="@id/feed_item_distance"
+                android:layout_marginRight="5dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/feed_item_content_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Title Holder"
-            android:gravity="center_vertical"
-            android:textColor="@color/DarkSlateGray"
-            android:textSize="24sp"/>
+            android:layout_below="@id/feed_item_bar"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/feed_item_txtName"
+            <TextView
+                android:id="@+id/feed_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titulo"
+                android:gravity="center_vertical"
+                android:textColor="@color/DarkSlateGray"
+                android:textSize="24sp"/>
+
+            <RelativeLayout
+                android:id="@+id/feed_item_datetime_container"
+                android:layout_width="match_parent"
+                android:layout_below="@id/feed_item_title"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/ic_calendar"
+                    android:id="@+id/feed_item_date_icon"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quarta-feira, 16/11"
+                    android:layout_toEndOf="@id/feed_item_date_icon"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/feed_item_date"/>
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/ic_clock"
+                    android:id="@+id/feed_item_time_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/feed_item_date"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18:30"
+                    android:layout_toEndOf="@id/feed_item_time_icon"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/feed_item_txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium"
+                android:gravity="center_vertical"
+                android:textSize="12sp"
+                android:layout_below="@id/feed_item_datetime_container"
+                android:textColor="@color/DarkSlateGray" />
+
+        </RelativeLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Etiam posuere quam ac quam. Maecenas aliquet accumsan leo. Nullam dapibus fermentum ipsum. Etiam quis quam. Integer lacinia. Nulla est. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Integer vulputate sem a nibh rutrum consequat. Maecenas lorem. Pellentesque pretium"
-            android:gravity="center_vertical"
-            android:textSize="12sp"
-            android:layout_below="@id/feed_item_title"
-            android:textColor="@color/DarkSlateGray"
-            />
+            android:layout_height="1dp"
+            android:background="@color/app_background"
+            android:layout_below="@id/feed_item_content_container"
+            android:id="@+id/feed_item_divider"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/feed_item_footer_container"
+            android:layout_below="@id/feed_item_divider">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="VISUALIZAR"
+                android:textColor="@color/sport_type_soccer"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

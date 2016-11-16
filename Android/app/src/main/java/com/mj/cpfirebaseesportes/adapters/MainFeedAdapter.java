@@ -58,4 +58,8 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.ViewHo
         return mEventos.size();
     }
 
+    public void remove (int pos) {
+        mEventos.remove(pos);
+    }
+
 }

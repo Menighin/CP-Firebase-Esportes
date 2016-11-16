@@ -2,10 +2,9 @@ package com.mj.cpfirebaseesportes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
-    private RecyclerView mFeedList;
+    private RecyclerView mFeedListRecyclerView;
     private final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseRef = mDatabase.getReference().child("eventos");
     private List<Evento> mEventos = new ArrayList<Evento>();
@@ -59,20 +57,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
-        mFeedList = (RecyclerView) findViewById(R.id.main_feed_list);
-        mFeedList.setHasFixedSize(true);
+        mFeedListRecyclerView = (RecyclerView) findViewById(R.id.main_feed_list);
+        mFeedListRecyclerView.setHasFixedSize(true);
         final MainFeedAdapter mFeedAdapter = new MainFeedAdapter(mEventos);
-        mFeedList.setAdapter(mFeedAdapter);
+        mFeedListRecyclerView.setAdapter(mFeedAdapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mFeedList.setLayoutManager(llm);
+        mFeedListRecyclerView.setLayoutManager(llm);
 
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-//                Post post = dataSnapshot.getValue(Post.class);
                 HashMap<String, Object> values = (HashMap<String, Object>) dataSnapshot.getValue();
                 for (HashMap.Entry<String, Object> entry : values.entrySet())
                 {
@@ -96,6 +93,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
+
+
+        // Evento de swipe nos cards
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int pos = viewHolder.getAdapterPosition();
+                mFeedAdapter.remove(pos);
+                mFeedAdapter.notifyItemRemoved(pos);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mFeedListRecyclerView);
 
     }
 
