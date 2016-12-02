@@ -97,7 +97,6 @@ public class MainFeedFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mFeedListRecyclerView.setLayoutManager(llm);
 
-
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -125,7 +124,6 @@ public class MainFeedFragment extends Fragment {
             }
         };
         mDatabaseRef.addValueEventListener(postListener);
-
 
         // Evento de swipe nos cards
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {

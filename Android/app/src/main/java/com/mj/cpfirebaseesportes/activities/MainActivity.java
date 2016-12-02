@@ -1,12 +1,11 @@
-package com.mj.cpfirebaseesportes;
+package com.mj.cpfirebaseesportes.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,27 +16,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.mj.cpfirebaseesportes.adapters.MainFeedAdapter;
+import com.mj.cpfirebaseesportes.R;
+import com.mj.cpfirebaseesportes.adapters.MainFeedFragmentPageAdapter;
 import com.mj.cpfirebaseesportes.fragments.MainFeedFragment;
-import com.mj.cpfirebaseesportes.models.Evento;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, MainFeedFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFeedFragment.OnFragmentInteractionListener {
 
-
-
-    private FrameLayout fragmentContainerLayout;
+    private ViewPager mainFeedViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +36,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Declarando lista de fragments
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new MainFeedFragment());
+        fragments.add(new MainFeedFragment());
 
-        // Inflando fragmento
-        fragmentContainerLayout = (FrameLayout) findViewById(R.id.main_feed_fragment_container);
-        Fragment feedFragment = new MainFeedFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.main_feed_fragment_container, feedFragment).commit();
+        // Setando fragments ao slider
+        mainFeedViewPager = (ViewPager) findViewById(R.id.main_feed_viewpager);
+        mainFeedViewPager.setAdapter(new MainFeedFragmentPageAdapter(getSupportFragmentManager(), MainActivity.this, fragments));
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.main_feed_sliding_tabs);
+        tabLayout.setupWithViewPager(mainFeedViewPager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -61,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
     }
 

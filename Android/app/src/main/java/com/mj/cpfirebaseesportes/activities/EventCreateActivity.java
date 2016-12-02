@@ -1,4 +1,4 @@
-package com.mj.cpfirebaseesportes;
+package com.mj.cpfirebaseesportes.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +9,14 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mj.cpfirebaseesportes.R;
 import com.mj.cpfirebaseesportes.models.Evento;
 import com.mj.cpfirebaseesportes.pickers.DatePickerFragment;
 import com.mj.cpfirebaseesportes.pickers.TimePickerFragment;
 
 import java.util.Calendar;
 
-public class EventCreateActivity extends AppCompatActivity {
+public class EventCreateActivity extends BaseActivity {
 
     private EditText et_esporte;
     private EditText et_descricao;

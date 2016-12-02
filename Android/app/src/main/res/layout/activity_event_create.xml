@@ -4,7 +4,7 @@
     android:id="@+id/activity_event_create"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mj.cpfirebaseesportes.EventCreateActivity">
+    tools:context="com.mj.cpfirebaseesportes.activities.EventCreateActivity">
 
     <ScrollView
         android:layout_width="match_parent"
