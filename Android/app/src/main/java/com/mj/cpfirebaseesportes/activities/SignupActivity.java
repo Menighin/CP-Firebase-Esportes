@@ -81,6 +81,7 @@ public class SignupActivity extends BaseActivity {
                 if (user != null) {
                     // Usuário já logado, manda pra página principal
                     Intent i = new Intent(SignupActivity.this, MainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else {
                     // User is signed out

@@ -17,16 +17,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.mj.cpfirebaseesportes.R;
 import com.mj.cpfirebaseesportes.adapters.MainFeedFragmentPageAdapter;
 import com.mj.cpfirebaseesportes.fragments.MainFeedFragment;
+import com.mj.cpfirebaseesportes.fragments.MapFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MainFeedFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager mainFeedViewPager;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
 
         // Declarando lista de fragments
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new MainFeedFragment());
-        fragments.add(new MainFeedFragment());
+        fragments.add(new MainFeedFragment()); // Feed Fragment
+        fragments.add(new MapFragment()); // Map Fragment
 
         // Setando fragments ao slider
         mainFeedViewPager = (ViewPager) findViewById(R.id.main_feed_viewpager);
@@ -118,7 +122,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
-            //mAuth.signOut();
+            mAuth.signOut();
             Intent i = new Intent(MainActivity.this, SignupActivity.class);
             finishAffinity();
             startActivity(i);
@@ -127,10 +131,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }
