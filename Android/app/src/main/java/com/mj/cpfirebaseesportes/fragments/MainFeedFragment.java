@@ -66,7 +66,7 @@ public class MainFeedFragment extends Fragment {
                     Integer nPessoas = eventoHash.get("nPessoas") != null ? Integer.parseInt(eventoHash.get("nPessoas").toString()) : null ;
                     Double valor = eventoHash.get("valor") != null ? Double.parseDouble((String)eventoHash.get("valor").toString()) : null ;
 
-                    mEventos.add(new Evento(descricao, esporte, descricao, local, null, nPessoas, valor));
+                    mEventos.add(new Evento(descricao, esporte, descricao, local, 0.0, 0.0, null, nPessoas, valor));
 
                 }
                 mFeedAdapter.notifyDataSetChanged();

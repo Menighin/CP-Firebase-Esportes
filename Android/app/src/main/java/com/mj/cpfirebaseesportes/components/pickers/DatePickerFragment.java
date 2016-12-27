@@ -1,4 +1,4 @@
-package com.mj.cpfirebaseesportes.pickers;
+package com.mj.cpfirebaseesportes.components.pickers;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

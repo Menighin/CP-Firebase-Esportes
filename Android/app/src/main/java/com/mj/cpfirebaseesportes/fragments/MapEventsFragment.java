@@ -14,11 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.mj.cpfirebaseesportes.R;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapEventsFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap map;
 
-    public MapFragment() { }
+    public MapEventsFragment() { }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);

@@ -1,28 +1,38 @@
 package com.mj.cpfirebaseesportes.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.games.event.Event;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mj.cpfirebaseesportes.R;
+import com.mj.cpfirebaseesportes.fragments.CreateEventFormFragment;
+import com.mj.cpfirebaseesportes.fragments.MapPinFragment;
+import com.mj.cpfirebaseesportes.fragments.interfaces.FragmentCallback;
 import com.mj.cpfirebaseesportes.models.Evento;
-import com.mj.cpfirebaseesportes.pickers.DatePickerFragment;
-import com.mj.cpfirebaseesportes.pickers.TimePickerFragment;
+import com.mj.cpfirebaseesportes.components.pickers.DatePickerFragment;
+import com.mj.cpfirebaseesportes.components.pickers.TimePickerFragment;
 
 import java.util.Calendar;
 
-public class EventCreateActivity extends BaseActivity {
+public class EventCreateActivity extends BaseActivity implements FragmentCallback {
 
     private EditText et_esporte;
     private EditText et_descricao;
     private EditText et_local;
     private EditText et_pessoas;
     private EditText et_valor;
+    private FrameLayout fragmentHolder;
 
     private TextView tv_data;
     private TextView tv_hora;
@@ -32,6 +42,15 @@ public class EventCreateActivity extends BaseActivity {
 
     private DatabaseReference mDatabase;
 
+    private MapPinFragment mapPinFragment;
+    private CreateEventFormFragment formFragment;
+
+    private FloatingActionButton fab;
+
+    private LatLng eventLatLng;
+
+    private boolean fabSave = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,75 +58,64 @@ public class EventCreateActivity extends BaseActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        et_esporte = (EditText) findViewById(R.id.et_esporte);
-        et_descricao = (EditText) findViewById(R.id.et_descricao);
-        et_local = (EditText) findViewById(R.id.et_local);
-        et_pessoas = (EditText) findViewById(R.id.et_pessoas);
-        et_valor = (EditText) findViewById(R.id.et_valor);
+        fragmentHolder = (FrameLayout) findViewById(R.id.event_create_fragment_holder);
+        mapPinFragment = new MapPinFragment();
 
-        tv_data = (TextView) findViewById(R.id.tv_data);
-        tv_data.setText(CurrentDate());
+        getSupportFragmentManager().beginTransaction().add(R.id.event_create_fragment_holder, mapPinFragment).commit();
 
-        tv_hora = (TextView) findViewById(R.id.tv_hora);
-        tv_hora.setText(CurretTime());
+        fab = (FloatingActionButton) findViewById(R.id.fab_create_event);
 
-        dateFragment = new DatePickerFragment();
-        Bundle argsDate = new Bundle();
-        argsDate.putInt("textView", R.id.tv_data);
-        dateFragment.setArguments(argsDate);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        timeFragment = new TimePickerFragment();
-        Bundle argsTime = new Bundle();
-        argsTime.putInt("textView", R.id.tv_hora);
-        timeFragment.setArguments(argsTime);
+                if (!fabSave) {
+                    formFragment = new CreateEventFormFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-    }
+                    Bundle args = new Bundle();
+                    args.putDouble("lat", eventLatLng.latitude);
+                    args.putDouble("lon", eventLatLng.longitude);
+                    formFragment.setArguments(args);
 
-    private String CurrentDate()
-    {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.DATE) + "/" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.YEAR);
-    }
+                    transaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up, R.anim.slide_in_down, R.anim.slide_out_down);
 
-    private String CurretTime()
-    {
-        Calendar c = Calendar.getInstance();
-        return c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE);
-    }
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.event_create_fragment_holder, formFragment);
 
-    public void onSavePressed(View v) {
+                    transaction.commit();
 
-        String esporte = et_esporte.getText().toString();
-        String descricao = et_descricao.getText().toString();
-        String local = et_local.getText().toString();
-        Integer nPessoas = Integer.parseInt(et_pessoas.getText().toString());
-        Double valor = Double.parseDouble(et_valor.getText().toString());
+                    fabSave = true;
+                } else {
 
-        Calendar time = timeFragment.getTime();
-        Calendar data = dateFragment.getDate();
+                    Evento e = formFragment.getEvento();
 
-        data.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-        data.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+                    createEvento(e);
 
-        Evento evento = new Evento(descricao, esporte, descricao, local, data, nPessoas, valor);
-        createEvento(evento);
+                    Toast.makeText(EventCreateActivity.this, "Save! " + e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
-        Log.d("evento-create", "Clicou no botao de criar");
     }
 
     private void createEvento(Evento evento){
-
         DatabaseReference eventosRef = mDatabase.child("eventos");
         eventosRef.push().setValue(evento);
     }
 
-    public void showTimePickerDialog(View v) {
-        timeFragment.show(getFragmentManager(), "timePicker");
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        fabSave = false;
     }
 
-    public void showDatePickerDialog(View v) {
-        dateFragment.show(getFragmentManager(), "datePicker");
+    @Override
+    public void fragmentCallback(String tag, Object object) {
+        if (tag.equals(MapPinFragment.TAG)) {
+            eventLatLng = (LatLng) object;
+        } else if (tag.equals(CreateEventFormFragment.TAG)) {
+
+        }
     }
-
-
 }

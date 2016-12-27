@@ -1,7 +1,6 @@
 package com.mj.cpfirebaseesportes.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mj.cpfirebaseesportes.R;
 import com.mj.cpfirebaseesportes.adapters.MainFeedFragmentPageAdapter;
 import com.mj.cpfirebaseesportes.fragments.MainFeedFragment;
-import com.mj.cpfirebaseesportes.fragments.MapFragment;
+import com.mj.cpfirebaseesportes.fragments.MapEventsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Declarando lista de fragments
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new MainFeedFragment()); // Feed Fragment
-        fragments.add(new MapFragment()); // Map Fragment
+        fragments.add(new MapEventsFragment()); // Map Fragment
 
         // Setando fragments ao slider
         mainFeedViewPager = (ViewPager) findViewById(R.id.main_feed_viewpager);
